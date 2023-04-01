@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class RegistroResumos {
     private int numeroDeResumos;
     private Resumo[] meusResumos;
@@ -45,6 +48,32 @@ public class RegistroResumos {
         }
         return cont;
     }
+    public String impremeResumos(){
+        String retorno = "";
+        retorno = "- " + conta() + " resumo(s) cadastrado(s)\n";
+        String[] temaEspec = pegaTema();
+        for(int i = 0; i <= temaEspec.length-1; i++){
+            if(i == 0){
+                retorno += "- " + temaEspec[i];
+            } else {
+                retorno += " | " + temaEspec[i];
+            }
+        }
+
+        return retorno;
+    }
+
+    public boolean temResumo(String tema){
+        boolean condicinal = false;
+        String[] temaEspec = pegaTema();
+        for (String temas : temaEspec){
+            if(temas.equals(tema)){
+                condicinal = true;
+                break;
+            }
+        }
+        return condicinal;
+    }
 
     private String pegaResumoEspec(int index) {
         Resumo resumo = meusResumos[index];
@@ -54,7 +83,17 @@ public class RegistroResumos {
 
     private boolean valida() {
         return index < numeroDeResumos;
+    }
 
-
+    private String[] pegaTema(){
+        String[] tema = new String[conta()];
+        for(int i = 0; i <= meusResumos.length -1; i++){
+            if (meusResumos[i] != null){
+                tema[i] = meusResumos[i].getTema(); //acessando o array em determinada posicao
+            } else {
+                break;
+            }
+        }
+        return tema;
     }
 }

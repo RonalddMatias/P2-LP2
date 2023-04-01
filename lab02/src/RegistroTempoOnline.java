@@ -5,6 +5,7 @@ public class RegistroTempoOnline {
 
     public RegistroTempoOnline(String disciplina) {
         this.disciplina = disciplina;
+        this.metaHorasDaDisciplina = 120;
     }
 
     public RegistroTempoOnline(String disciplina, int metaHorasDaDisciplina) {

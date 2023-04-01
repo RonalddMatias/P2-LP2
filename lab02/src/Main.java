@@ -40,11 +40,9 @@ public class Main {
         System.out.println(prog2.toString());
 
         System.out.println("---");
-        RegistroResumos meusResumo = new RegistroResumos(3);
+        RegistroResumos meusResumo = new RegistroResumos(100);
         meusResumo.adiciona("Classes", "Classes definem um tipo e a base de código para criação de objetos.");
-        meusResumo.adiciona("Tipo", "Identifica a semântica (operações e significados) de um conjunto de dados.");
-        meusResumo.adiciona("Klca", "Identifica a semântica (operações e significados) de um conjunto de dados.");
-        meusResumo.adiciona("kasd", "Identifica a semântica (operações e significados) de um conjunto de dados.");
+        meusResumo.adiciona("Tipo", "Identifica a sem6antica (operações e significados) de um conjunto de dados.");
 
         String[] resumos = meusResumo.pegaResumo();
 
@@ -52,5 +50,10 @@ public class Main {
             System.out.println(resumos[i]);
         }
 
+        System.out.println();
+        System.out.println("Resumos: ");
+        System.out.println(meusResumo.impremeResumos());
+        System.out.println(meusResumo.temResumo("Classes"));
+        System.out.println(meusResumo.temResumo("Objetos"));
     }
 }
