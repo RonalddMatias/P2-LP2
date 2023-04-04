@@ -5,7 +5,7 @@ import java.util.Arrays;
  * Classe RegistroResumos que tem como utilidade criar objetos do tipo RegistraResumo que vai receber como parâmetros 
  * numeroDeResumos que é um inteiro, meusResumos um array e o index, que é um inteiro.
  * 
- * @author Ronaldd Matias
+ * @author Ronaldd Matias  - 122110574
  *
  */
 public class RegistroResumos {

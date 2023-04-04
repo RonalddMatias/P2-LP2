@@ -1,3 +1,9 @@
+/**
+ * A classe RegistraTempoOnline
+ * 
+ * @author Ronaldd Matias - 122110574
+ *
+ */
 public class RegistroTempoOnline {
     private String disciplina;
     private int metaHorasDaDisciplina;

@@ -2,7 +2,7 @@
  * Classe Resumo implementada para criar objetos do tipo Resumo que irão receber atributos do tipo String, tais como 
  * tema e resumo
  * 
- * @author Ronaldd Matias
+ * @author Ronaldd Matias - 122110574
  *
  */
 public class Resumo {
