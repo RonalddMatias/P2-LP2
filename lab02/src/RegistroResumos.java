@@ -5,11 +5,10 @@ import java.util.Arrays;
  * Classe RegistroResumos que tem como utilidade criar objetos do tipo RegistraResumo que vai receber como parâmetros 
  * numeroDeResumos que é um inteiro, meusResumos um array e o index, que é um inteiro.
  * 
- * @author Ronaldd Matias  - 122110574
+ * @author Ronaldd Matias - 122110574
  *
  */
 public class RegistroResumos {
-    private int numeroDeResumos;
     private Resumo[] meusResumos;
     private int index;
 
@@ -21,7 +20,6 @@ public class RegistroResumos {
      * @param numeroDeResumos quantidade de resumo.
      */
     public RegistroResumos(int numeroDeResumos) {
-        this.numeroDeResumos = numeroDeResumos;
         meusResumos = new Resumo[numeroDeResumos];
         index = 0;
     }
@@ -50,6 +48,8 @@ public class RegistroResumos {
     
     /**
      * O método que auxilia na impressão o objeto RegistraResumos
+     * 
+     * @return String formatada
      */
     
     public String toString() {
@@ -66,7 +66,7 @@ public class RegistroResumos {
      */
     
     public String[] pegaResumo() {
-        String[] retorno = new String[numeroDeResumos];
+        String[] retorno = new String[meusResumos.length];
         for (int i = 0; i <= meusResumos.length - 1; i++) {
             Resumo resumo = meusResumos[i];
             if (resumo != null) {
@@ -139,7 +139,7 @@ public class RegistroResumos {
     }
 
     private boolean valida() {
-        return index < numeroDeResumos;
+        return index < meusResumos.length;
     }
 
     private String[] pegaTema(){
