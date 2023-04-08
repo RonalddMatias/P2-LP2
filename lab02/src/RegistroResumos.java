@@ -1,5 +1,4 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
+
 
 /**
  * Classe RegistroResumos que tem como utilidade criar objetos do tipo RegistraResumo que vai receber como parâmetros 
