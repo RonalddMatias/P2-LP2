@@ -7,14 +7,13 @@ public class MainAgenda {
 		Agenda agenda = new Agenda();
 		
 		String escolha = "";
-		
-		try{
-			while(true) {
+		while(true) {
+			try{
 				escolha = ExibirMenu.menu(sc);
 				ExibirMenu.verificandoAlternativa(escolha, agenda, sc);
+			} catch(NullPointerException error) {
+				System.out.println(error.getMessage());
 			}
-		} catch(NullPointerException error) {
-			System.out.println(error.getMessage());
 		}
 		
 	}

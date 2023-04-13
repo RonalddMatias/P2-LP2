@@ -20,29 +20,28 @@ public class Agenda {
 		System.out.print("\nPosição na agenda> ");
 		int posicao = sc.nextInt();
 		sc.nextLine();
-		if (posicao > contatos.length) {
+		
+		if (existePosicao(posicao)) {
 			throw new NullPointerException("POSIÇÃO INVÁLIDA");
-		} else {
-			System.out.print("\nNome> ");
-			String nome = sc.nextLine();
-			if (nome.equals("")) {
-				throw new NullPointerException("CONTATO INVALIDO");
-			} else {
-				System.out.print("\nSobrenome> ");
-				String sobrenome = sc.nextLine();
-				System.out.print("\nTelefone> ");
-				String telefone = sc.nextLine();
-				
-				//trocar a ordem
-				if(existeContato(nome, sobrenome)) {
-					System.out.println("Contato cadastrado");
-				}
-
-				Contato contato = new Contato(posicao, nome, sobrenome, telefone);
-				contatos[posicao] = contato;
-				System.out.println("CONTATO ADICIONADO COM SUCESSO");
-			}
 		}
+
+		System.out.print("\nNome> ");
+		String nome = sc.nextLine();
+		if (nome.equals("")) {
+			throw new NullPointerException("CONTATO INVALIDO");
+		}
+		System.out.print("\nSobrenome> ");
+		String sobrenome = sc.nextLine();
+		// trocar a ordem
+		if (existeContato(nome, sobrenome)) {
+			throw new NullPointerException("CONTATO JA CADASTRADO");
+		}
+		System.out.print("\nTelefone> ");
+		String telefone = sc.nextLine();
+
+		Contato contato = new Contato(posicao, nome, sobrenome, telefone);
+		contatos[posicao] = contato;
+		System.out.println("CONTATO ADICIONADO COM SUCESSO");
 
 	}
 
@@ -71,4 +70,12 @@ public class Agenda {
 		return condicional;
 	}
 	
+	private static boolean existePosicao(int posicao) {
+		boolean condicional = true;
+		if(posicao > contatos.length || posicao < contatos.length) {
+			condicional = false;
+		}
+		return condicional;
+	}
+
 }
