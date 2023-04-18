@@ -106,7 +106,7 @@ public class Contato {
 		}
 
 		Contato other = (Contato) obj;
-		return this.getNome().equals(other.equals(nome)) && this.getSobrenome().equals(other.equals(sobrenome)); 
+		return this.getNome().equals(other.getNome()) && this.getSobrenome().equals(other.getSobrenome()); 
 	}
 
 }

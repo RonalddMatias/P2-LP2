@@ -72,15 +72,17 @@ public class Agenda {
 
 	public boolean cadastraContato(int posicao, String nome, String sobrenome, String telefone) {
 		try {
-
+			
+			Contato contato = new Contato(nome, sobrenome, telefone);
+			
 			if (posicao < 1 || posicao > TAMANHO_AGENDA) {
-				throw new IndexOutOfBoundsException("POSIÇÃO INVÁLIDA");
+				throw new IndexOutOfBoundsException("POSIÇÃO INVÁLIDA"); // é para adicionar sem sobrenome
 			} else if (nome.trim().equals("") || telefone.trim().equals("")) { // o trim() tira os espaços
 				throw new IllegalArgumentException("Entrada inválida");
-			} else if (existeContato(nome, sobrenome)) {
+			} else if (existeContato(contato)) {
 				throw new Exception("Nome já cadastrado!");
 			} else {
-				Contato contato = new Contato(nome, sobrenome, telefone);
+				
 				contatos[posicao - 1] = contato;
 				System.out.println("Contato Cadastrado");
 				return true;
@@ -195,10 +197,10 @@ public class Agenda {
 
 	}
 
-	private boolean existeContato(String nome, String sobrenome) {
+	private boolean existeContato(Contato novoContato) {
 		boolean condicional = false;
 		for (Contato contato : contatos) {
-			if (contato != null && contato.getNome().equals(nome) && contato.getSobrenome().equals(sobrenome)) {
+			if (contato != null && contato.equals(novoContato)) {
 				condicional = true;
 			}
 		}
