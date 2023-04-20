@@ -2,13 +2,11 @@ package Testes;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import agenda.Agenda;
-import agenda.Contato;
 
 class AgendaTest {
 
@@ -86,6 +84,9 @@ class AgendaTest {
 		assertFalse(agendaTeste.cadastraContato(2, "Ronaldd", "Feliph", "21342662"));
 	}
 	
+	/**
+	 * Testando quando favoritar um contato
+	 */
 	
 	@Test 
 	void testaCadastraContato() {
