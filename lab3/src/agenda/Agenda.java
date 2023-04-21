@@ -72,17 +72,17 @@ public class Agenda {
 
 	public boolean cadastraContato(int posicao, String nome, String sobrenome, String telefone) {
 		try {
-			
+
 			Contato contato = new Contato(nome, sobrenome, telefone);
-			
-			if (posicao < 1 || posicao > TAMANHO_AGENDA) {
+
+			if (posicao < 1 || posicao > 100) {
 				throw new IndexOutOfBoundsException("POSIÇÃO INVÁLIDA"); // é para adicionar sem sobrenome
 			} else if (nome.trim().equals("") || telefone.trim().equals("")) { // o trim() tira os espaços
 				throw new IllegalArgumentException("Entrada inválida");
 			} else if (existeContato(contato)) {
-				throw new Exception("Nome já cadastrado!");
+				throw new Exception("CONTATO JA CADASTRADO");
 			} else {
-				
+
 				contatos[posicao - 1] = contato;
 				System.out.println("Contato Cadastrado");
 				return true;
@@ -107,21 +107,25 @@ public class Agenda {
 	 */
 
 	public boolean exibirContato(int posicao) {
-		try {
 
+		try {
+			if (posicao < 1 || posicao > 100) {
+				throw new IndexOutOfBoundsException("POSIÇÃO NÃO EXISTENTE");
+			}
 			if (getContato(posicao) != null) {
 				System.out.println(getContato(posicao).toString());
 				return true;
 			} else if (getContato(posicao) == null) {
-				throw new IndexOutOfBoundsException("NENHUM NOME CADASTRADO NESSA POSIÇÃO");
-			} else {
-				throw new IndexOutOfBoundsException("POSIÇÃO INVÁLIDA");
+				throw new IllegalArgumentException("NENHUM NOME CADASTRADO NESSA POSIÇÃO");
 			}
 
-		} catch (IndexOutOfBoundsException error) {
+		} catch (IllegalArgumentException error) {
 			System.out.println();
 			System.out.println("Error: " + error.getMessage());
+		} catch (IndexOutOfBoundsException error) {
+			System.out.println("Error: " + error.getMessage());
 		}
+
 		return false;
 	}
 
@@ -162,8 +166,6 @@ public class Agenda {
 
 		} catch (IndexOutOfBoundsException error) {
 			System.out.println("Error: " + error.getMessage());
-		} catch (NullPointerException err) {
-			System.out.println("Error: " + err.getMessage()); // REMOVER ESSA EXCEÇÃO
 		}
 		return false;
 
@@ -191,7 +193,7 @@ public class Agenda {
 			System.out.println("Contato na Posição " + posicao + " foi removido");
 			return true;
 		} catch (IndexOutOfBoundsException error) {
-			System.out.println("Error " + error.getMessage());
+			System.out.println("Error: " + error.getMessage());
 		}
 		return false;
 

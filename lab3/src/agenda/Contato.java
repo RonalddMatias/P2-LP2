@@ -25,7 +25,7 @@ public class Contato {
 	 */
 
 	public Contato(String nome, String sobrenome, String telefone) {
-		this.nome = nome;
+		this.nome = nome.trim();
 		this.sobrenome = sobrenome;
 		this.telefone = telefone;
 		this.favorito = false;
