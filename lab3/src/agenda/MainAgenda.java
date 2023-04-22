@@ -2,12 +2,13 @@ package agenda;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
  * Interface com menus texto para manipular uma agenda de contatos.
  * 
- * @author nazarenoandrade
+ * @author nazarenoandrade + Ronaldd Matias
  *
  */
 public class MainAgenda {
@@ -15,7 +16,7 @@ public class MainAgenda {
 	public static void main(String[] args) {
 		Agenda agenda = new Agenda();
 		
-		
+		/*
 		System.out.println("Carregando agenda inicial");
 		try {
 			
@@ -25,7 +26,7 @@ public class MainAgenda {
 		} catch (IOException e) {
 			System.err.println("Erro lendo arquivo: " + e.getMessage());
 		}
-		
+		*/
 		Scanner scanner = new Scanner(System.in);
 		String escolha = "";
 		while (true) {
@@ -103,9 +104,16 @@ public class MainAgenda {
 	}
 
 	private static void removerFavorito(Agenda agenda, Scanner scanner) {
-		System.out.print("Posiçao>");
+		System.out.print("Posiçao> ");
 		int posicao = scanner.nextInt();
-		agenda.removerFavorito(posicao);
+		try {
+			agenda.removerFavorito(posicao);
+		} catch (IndexOutOfBoundsException error) {
+			System.out.println("Posição Inválida");
+		} catch (NullPointerException error) {
+			System.out.println("Essa posição não existe nenhum contato para ser removido");
+		}
+		
 	}
 
 	private static void adicionarFavorito(Agenda agenda, Scanner scanner) {
@@ -113,7 +121,17 @@ public class MainAgenda {
 		int contato = scanner.nextInt();
 		System.out.print("Posiçao> ");
 		int posicao = scanner.nextInt();
-		agenda.adicionaFavorito(contato, posicao);
+		
+		try {
+			agenda.adicionaFavorito(contato, posicao);
+			System.out.println("CONTATO fAVORITADO NA POSIÇÃO " + posicao);
+			
+		} catch (IndexOutOfBoundsException error){
+			System.out.println("POSICAO INVÁLIDA");
+		} catch (NullPointerException error) {
+		} catch (InputMismatchException error) {
+			System.out.println("Esse contato já foi adicionado como favorito");
+		}
 		
 	}
 
@@ -144,7 +162,16 @@ public class MainAgenda {
 	private static void exibeContato(Agenda agenda, Scanner scanner) {
 		System.out.print("\nQual contato> ");
 		int posicao = scanner.nextInt();
-		agenda.exibirContato(posicao);
+		try {
+			
+			System.out.println(agenda.exibirContato(posicao));
+			
+		} catch (IllegalArgumentException error) {
+			System.out.println("NENHUM CONTATO CADASTRADO NESSA POSIÇÃO" );
+		} catch (IndexOutOfBoundsException error) {
+			System.out.println("POSIÇÃO INVÁLIDA");
+		}
+		
 	}
 
 	/**
@@ -163,7 +190,17 @@ public class MainAgenda {
 		String sobrenome = scanner.nextLine();
 		System.out.print("\nTelefone> ");
 		String telefone = scanner.nextLine();
-		agenda.cadastraContato(posicao, nome, sobrenome, telefone);
+		try {
+			agenda.cadastraContato(posicao, nome, sobrenome, telefone);
+			System.out.println("Contato Cadastrado com sucesso");
+			
+		} catch(IllegalArgumentException error) {
+			System.out.println("Entrada Inválida");
+		} catch(InputMismatchException error) {
+			System.out.println("CONTATO JÁ CADASTRADO");
+		} catch(IndexOutOfBoundsException error) {
+			System.out.println("POSIÇÃO INVÁLIDA");
+		}
 	}
 
 	/**

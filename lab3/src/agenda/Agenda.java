@@ -1,5 +1,7 @@
 package agenda;
 
+import java.util.InputMismatchException;
+
 /**
  * A classe Agenda possui alguns atributos, como as constantes TAMANHO_AGENDA e
  * TAMANHO_FAVORITOS, que definem o tamanho máximo da agenda e da lista de
@@ -68,65 +70,51 @@ public class Agenda {
 	 * @param nome      Nome do contato.
 	 * @param sobrenome Sobrenome do contato.
 	 * @param telefone  Telefone do contato.
+	 * 
+	 * @throws IndexOutOfBoundsException caso a entrada seja inválida
+	 * @throws IllegalArgumentException o usuario não digite nem nome ou telefone
+	 * @throws InputMismatchException caso ja exista um contato com o mesmo nome e sobrenome
 	 */
 
-	public boolean cadastraContato(int posicao, String nome, String sobrenome, String telefone) {
-		try {
-
+	public void cadastraContato(int posicao, String nome, String sobrenome, String telefone) {
 			Contato contato = new Contato(nome, sobrenome, telefone);
 
 			if (posicao < 1 || posicao > 100) {
-				throw new IndexOutOfBoundsException("POSIÇÃO INVÁLIDA"); // é para adicionar sem sobrenome
+				throw new IndexOutOfBoundsException(); // é para adicionar sem sobrenome
+				
 			} else if (nome.trim().equals("") || telefone.trim().equals("")) { // o trim() tira os espaços
-				throw new IllegalArgumentException("Entrada inválida");
+				throw new IllegalArgumentException();
+				
 			} else if (existeContato(contato)) {
-				throw new Exception("CONTATO JA CADASTRADO");
+				throw new InputMismatchException();
 			} else {
-
 				contatos[posicao - 1] = contato;
-				System.out.println("Contato Cadastrado");
-				return true;
 			}
-		} catch (IllegalArgumentException error) {
-			System.out.println("Error: " + error.getMessage());
-		} catch (IndexOutOfBoundsException error) {
-			System.out.println("Error: " + error.getMessage());
-		} catch (Exception error) {
-			System.out.println("Error: " + error.getMessage());
-		}
-		return false;
 	}
 
 	/**
 	 * Exibe as informações do contato na posição especificada.
 	 * 
 	 * @param posicao do contato que será apresentado.
-	 * @return true se a operação for bem-sucedida ou false caso contrário
+	 * @return String do contado especificado
 	 * @throws IndexOutOfBoundsException se a posição for inválida ou se não houver
 	 *                                   nome cadastrado na posição especificada
 	 */
 
-	public boolean exibirContato(int posicao) {
+	public String exibirContato(int posicao) {
+		
+		if (posicao < 1 || posicao > 100) {
+			throw new IndexOutOfBoundsException();
+		}
+		if (getContato(posicao) != null) {
 
-		try {
-			if (posicao < 1 || posicao > 100) {
-				throw new IndexOutOfBoundsException("POSIÇÃO NÃO EXISTENTE");
-			}
-			if (getContato(posicao) != null) {
-				System.out.println(getContato(posicao).toString());
-				return true;
-			} else if (getContato(posicao) == null) {
-				throw new IllegalArgumentException("NENHUM NOME CADASTRADO NESSA POSIÇÃO");
-			}
-
-		} catch (IllegalArgumentException error) {
-			System.out.println();
-			System.out.println("Error: " + error.getMessage());
-		} catch (IndexOutOfBoundsException error) {
-			System.out.println("Error: " + error.getMessage());
+			return (getContato(posicao).toString());
+			
+		} else if (getContato(posicao) == null) {
+			throw new IllegalArgumentException();
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
@@ -135,40 +123,30 @@ public class Agenda {
 	 * @param contato Posição pega no array de Contatos
 	 * @param posicao Posição na qual o contato pego vai ser adicionado no array de
 	 *                favoritos
-	 * @return true se o contato foi adicionado com sucesso ou false caso contrário.
-	 * @throws IndexOutOfBoundsException caso a posição deja
+	 * @throws IndexOutOfBoundsException caso a posição seja inválidad
+	 * @throws NullPointerException se o usuario digitou um contato que ainda não existe
+	 * @throws InputMismatchException caso o usuário digite um contato que ja esta na lista de favorito
 	 */
 
-	public boolean adicionaFavorito(int contato, int posicao) {
-
-		try {
+	public void adicionaFavorito(int contato, int posicao) {
 
 			if (contato < 1 || contato > TAMANHO_AGENDA) {
-				throw new IndexOutOfBoundsException("POSICAO INVÁLIDA");
+				throw new IndexOutOfBoundsException();
 			} else if (posicao < 1 || posicao > 10) {
-				throw new IndexOutOfBoundsException("POSICAO INVÁLIDA");
+				throw new IndexOutOfBoundsException();
 			}
 
 			Contato contatoNaAgenda = getContato(contato);
 
 			if (contatoNaAgenda == null) {
 				System.out.println("O contato não existe na posição " + contato);
-				return false;
+				throw new NullPointerException();
 			} else if (contatoNaAgenda.isFavorito()) { // vendo se ele já é um favorito
-				System.out.println("Esse contato já foi adicionado como favorito");
-				return false;
+				throw new InputMismatchException();
+			} else {
+				favoritos[posicao - 1] = contatoNaAgenda;
+				contatoNaAgenda.setFavorito(true);
 			}
-
-			favoritos[posicao - 1] = contatoNaAgenda;
-			contatoNaAgenda.setFavorito(true);
-			System.out.println("CONTATO fAVORITADO NA POSIÇÃO " + posicao);
-			return true;
-
-		} catch (IndexOutOfBoundsException error) {
-			System.out.println("Error: " + error.getMessage());
-		}
-		return false;
-
 	}
 
 	/**
@@ -176,27 +154,23 @@ public class Agenda {
 	 * tipo inteiro.
 	 * 
 	 * @param posicao do contato a ser removido
-	 * @return true se o contato foi removido com sucesso ou false caso contrário.
 	 * @throws IndexOutOfBoundsException se a posição for inválida
 	 */
 
-	public boolean removerFavorito(int posicao) {
-		try {
+	public void removerFavorito(int posicao) {
 			if (posicao < 1 || posicao > TAMANHO_FAVORITOS) {
-				throw new IndexOutOfBoundsException("Posição Inválida");
+				throw new IndexOutOfBoundsException();
 			}
 
 			Contato contato = getContato(posicao);
-
+			
+			if (contato == null) {
+				throw new NullPointerException();
+			}
+			
 			favoritos[posicao - 1] = null;
 			contato.setFavorito(false); // setando novamente para false para tirar o coração.
 			System.out.println("Contato na Posição " + posicao + " foi removido");
-			return true;
-		} catch (IndexOutOfBoundsException error) {
-			System.out.println("Error: " + error.getMessage());
-		}
-		return false;
-
 	}
 
 	private boolean existeContato(Contato novoContato) {
