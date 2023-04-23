@@ -16,7 +16,7 @@ public class MainAgenda {
 	public static void main(String[] args) {
 		Agenda agenda = new Agenda();
 		
-		/*
+		
 		System.out.println("Carregando agenda inicial");
 		try {
 			
@@ -26,7 +26,7 @@ public class MainAgenda {
 		} catch (IOException e) {
 			System.err.println("Erro lendo arquivo: " + e.getMessage());
 		}
-		*/
+		
 		Scanner scanner = new Scanner(System.in);
 		String escolha = "";
 		while (true) {

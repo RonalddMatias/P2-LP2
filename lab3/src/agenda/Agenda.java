@@ -155,6 +155,7 @@ public class Agenda {
 	 * 
 	 * @param posicao do contato a ser removido
 	 * @throws IndexOutOfBoundsException se a posição for inválida
+	 * @throws NullPointerException se a não tiver nenhum contato
 	 */
 
 	public void removerFavorito(int posicao) {
