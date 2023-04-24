@@ -1,16 +1,34 @@
+package HugsAndSmile;
 import java.util.Objects;
 
 public class Dog {
 	private String nome;
 	private String tutor;
 	private double qtdRacao;
+	private String restricoes;
 	
+	// construtor sem restrições
 	public Dog(String nome, String tutor, double qtdRacao) {
 		this.nome = nome;
 		this.tutor = tutor;
 		this.qtdRacao = qtdRacao;
 	}
-
+	
+	// Construtor com restriões
+	public Dog(String nome, String tutor, double qtdRacao, String restricao) {
+		this.nome = nome;
+		this.tutor = tutor;
+		this.qtdRacao = qtdRacao;
+		this.restricoes = restricao;
+	}
+	
+	public double dobraRacao() {
+		if(getRestricoes().equals("")) {
+			return getQtdRacao();
+		} else { // Se não for vazio significa que tem algo (restrição)
+			return getQtdRacao() * 2;
+		}
+	}
 	
 	
 	public String getNome() {
@@ -29,7 +47,15 @@ public class Dog {
 		return tutor;
 	}
 
+	
 
+	public String getRestricoes() {
+		return restricoes;
+	}
+
+	public void setRestricoes(String restricoes) {
+		this.restricoes = restricoes;
+	}
 
 	public void setTutor(String tutor) {
 		this.tutor = tutor;
@@ -49,7 +75,7 @@ public class Dog {
 
 	@Override
 	public String toString() {
-		return "Dog [nome=" + nome + ", tutor=" + tutor + "]";
+		return "Dog [nome=" + nome + ", tutor=" + tutor + "] \n";
 	}
 
 	@Override
