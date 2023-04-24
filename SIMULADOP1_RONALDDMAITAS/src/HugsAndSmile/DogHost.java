@@ -14,6 +14,12 @@ public class DogHost {
 		this.valorTotalHospedagem = new double[qtdMaxDog];
 	}
 	
+	//Retornar a posicão de um dog
+	public Dog getDog(int posicao) {
+		return dogs[posicao -1];
+	}
+	
+	//Retornar o array de dogs
 	public Dog[] getDogs() {
 		return this.dogs.clone();
 	}
@@ -63,7 +69,7 @@ public class DogHost {
 		Dog[] dogs = getDogs();
 		for(Dog cachorros : dogs) {
 			if(cachorros != null) {
-				retorno += "->" + cachorros.toString();
+				retorno += "-> " + cachorros.toString();
 			}
 		}
 		return retorno;
@@ -73,9 +79,9 @@ public class DogHost {
 		double hospedagem = 0.0;
 		Dog[] dogs = getDogs();
 		for(Dog cachorros : dogs) {
-			if(cachorros.equals(toto)) {
+			if(cachorros != null && cachorros.equals(toto)) {
 				hospedagem = cachorros.getQtdRacao() * 0.4 * dias;
-				
+				return hospedagem;
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -99,7 +105,7 @@ public class DogHost {
 	private boolean existeDog(Dog dog) {
 		Dog[] dogs = getDogs();
 		for(int i = 0; i < dogs.length; i++) {
-			if(dogs[i] != null && dogs.equals(dog)) {
+			if(dogs[i] != null && dogs[i].equals(dog)) {
 				return true;
 			}
 		}
