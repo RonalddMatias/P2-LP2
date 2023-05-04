@@ -1,17 +1,20 @@
 package MrBeat;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Time {
 	
 	private String id;
 	private String nome;
-	private String mascota;
+	private String mascote;
+	private ArrayList<Campeonato> campeonatos;
 	
-	public Time(String id, String nome, String mascota) {
+	public Time(String id, String nome, String mascote) {
 		this.id = id;
 		this.nome = nome;
-		this.mascota = mascota;
+		this.mascote = mascote;
+		this.campeonatos = new ArrayList<>();
 	}
 
 	
@@ -28,9 +31,25 @@ public class Time {
 
 
 
-	public String getMascota() {
-		return mascota;
+	public String getMascote() {
+		return mascote;
 	}
+	
+	public void addCampeonato(Campeonato campeonato) {
+		campeonatos.add(campeonato);
+	}
+	
+	public String exibirCampeonatos() {
+		String retorno = "";
+		System.out.println("Campeonato(s) do " + getNome());
+		for(int i = 0; i < campeonatos.size(); i++) {
+			if(campeonatos.get(i) != null) {
+				retorno += campeonatos.get(i).toString();
+			}
+		}
+		return retorno;
+	}
+
 
 
 
@@ -50,6 +69,14 @@ public class Time {
 		Time other = (Time) obj;
 		return this.getId().equals(other.getId());
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "[" + id + "] " + nome + " / " + mascote;
+	}
+	
 	
 	
 	
