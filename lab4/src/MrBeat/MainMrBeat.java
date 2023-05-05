@@ -52,6 +52,7 @@ public class MainMrBeat {
 			break;
 		case "T":
 			tentarSorteOuStatus(mrBeat, sc);
+			break;
 		case "!":
 			sair();
 			break;
@@ -68,24 +69,26 @@ public class MainMrBeat {
 				+ "\nOpção> ");
 		String alternativa = sc.nextLine();
 		if(alternativa.toUpperCase().equals("A")) {
+			
 			try {
 				System.out.print("Código: ");
 				String id = sc.nextLine();
 				System.out.print("Campeonato: ");
 				String campeonato = sc.nextLine();
-				System.out.println("Valor: ");
-				String valor = sc.nextLine();
-				System.out.println("Colocação: ");
+				System.out.print("Valor: ");
+				double valor = sc.nextDouble();
+				System.out.print("Colocação: ");
 				int colocacao = sc.nextInt();
 	
 				mrBeat.apostar(id, campeonato, valor, colocacao);
+				System.out.println("APOSTA FEITA!");
 				
-			} catch (IllegalAccessException error) {
+			} catch (IllegalArgumentException error) {
 				System.out.println(error.getMessage());
 			}
 			
 		} else if (alternativa.toUpperCase().equals("S")) {
-			
+			System.out.println(mrBeat.statusDaAposta());
 		} else {
 			System.out.println("OPÇÃO INVÁLIDA");
 		}
@@ -168,7 +171,13 @@ public class MainMrBeat {
 				String id = sc.nextLine();
 				System.out.print("Campeonato: ");
 				String campeonato = sc.nextLine();
-				mrbeat.verificarTimeNoCampeonato(id, campeonato);
+				
+				if(mrbeat.verificarTimeNoCampeonato(id, campeonato)) {
+					System.out.println("TIME INCLUSO NO CAMPEONATO");
+				} else {
+					System.out.println("TIME NÃO ESTA INCLUSO NO CAMPEONATO");
+				}
+				
 			} catch(IllegalArgumentException error) {
 				System.out.println(error.getMessage());
 			}

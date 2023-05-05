@@ -19,6 +19,14 @@ public class Campeonato {
 		return nome;
 	}
 	
+	public int getIndex() {
+		return index;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
 	public boolean adicionaTime(Time time) {
 		
 		if(index == quantidade) {
@@ -37,10 +45,8 @@ public class Campeonato {
 				return true;
 			}
 		}
-		throw new IllegalArgumentException("TIME NÃO ESTÁ NO CAMPEONATO");
+		 return false;
 	}
-	
-	
 	
 	@Override
 	public int hashCode() {

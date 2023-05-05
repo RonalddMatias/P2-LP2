@@ -7,12 +7,12 @@ public class MrBeat {
 
 	private ArrayList<Time> times;
 	private ArrayList<Campeonato> campeonatos;
-	private ArrayList<Aposta> aposta;
+	private ArrayList<Aposta> apostas;
 
 	public MrBeat() {
 		this.times = new ArrayList<>();
 		this.campeonatos = new ArrayList<>();
-		this.aposta = new ArrayList<>();
+		this.apostas = new ArrayList<>();
 	}
 
 	public void incluirTime(String id, String nome, String mascote) {
@@ -52,7 +52,7 @@ public class MrBeat {
 		}
 	}
 
-	public void incluirTime(String id, String campeonato) {
+	public boolean incluirTime(String id, String campeonato) {
 		Time timeTemp = new Time(id, null, null);
 		Campeonato campTemp = new Campeonato(campeonato, 0);
 
@@ -64,11 +64,16 @@ public class MrBeat {
 			if (campeonatos.contains(campTemp)) {
 
 				try {
-					
+
 					int pos = campeonatos.indexOf(campTemp);
 					campTemp = campeonatos.get(pos);
+					
+					if(campTemp.verificarTime(timeTemp)) {
+						return false;
+					}
 					campTemp.adicionaTime(timeTemp);
 					timeTemp.addCampeonato(campTemp);
+					return true;
 
 				} catch (IndexOutOfBoundsException error) {
 					System.out.println(error.getMessage());
@@ -81,52 +86,84 @@ public class MrBeat {
 		} else {
 			throw new IllegalArgumentException("TIME NÃO EXISTE");
 		}
+		return false;
 	}
 
-	public void verificarTimeNoCampeonato(String id, String campeonato) {
+	public boolean verificarTimeNoCampeonato(String id, String campeonato) {
 		Time timeTemporario = new Time(id, null, null);
 		Campeonato campTemporario = new Campeonato(campeonato, 0);
-		
-		if(times.contains(timeTemporario)) {
+
+		if (times.contains(timeTemporario)) {
 			int index = times.indexOf(timeTemporario);
 			timeTemporario = times.get(index);
-			
-			if(campeonatos.contains(campTemporario)) {
+
+			if (campeonatos.contains(campTemporario)) {
 				try {
 					int posicao = campeonatos.indexOf(campTemporario);
 					campTemporario = campeonatos.get(posicao);
-					campTemporario.verificarTime(timeTemporario);
-				} catch(IllegalArgumentException error) {
+					
+					if(campTemporario.verificarTime(timeTemporario)) {
+						return true;
+					} else {
+						return false;
+					}
+					
+				} catch (IllegalArgumentException error) {
 					System.out.println(error.getMessage());
 				}
-				
+
 			} else {
 				throw new IllegalArgumentException("CAMPEONATO NÃO EXISTE.");
 			}
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("TIME NÃO EXISTE");
 		}
+		return false;
 	}
-	
+
 	public String exibirCampeonatoQueTimeParticipa(String id) {
 		Time timeTemporario = new Time(id, null, null);
-		
-		if(times.contains(timeTemporario)){
-			
+
+		if (times.contains(timeTemporario)) {
+
 			int index = times.indexOf(timeTemporario);
 			timeTemporario = times.get(index);
 			return timeTemporario.exibirCampeonatos();
-			
+
 		} else {
 			throw new IllegalArgumentException("TIME NÃO EXISTE.");
 		}
-		
+
+	}
+
+	public void apostar(String id, String campeonato, double valor, int colocacao) {
+		Time timeTemporario = new Time(id, null, null);
+		Campeonato campeonatoTemporario = new Campeonato(campeonato, 0);
+
+		if (times.contains(timeTemporario)) {
+			int index = times.indexOf(timeTemporario);
+			timeTemporario = times.get(index);
+			if (campeonatos.contains(campeonatoTemporario)) {
+				int posicao = campeonatos.indexOf(campeonatoTemporario);
+				campeonatoTemporario = campeonatos.get(posicao);
+				
+				if(colocacao < campeonatoTemporario.getQuantidade()) {
+					Aposta aposta = new Aposta(timeTemporario, campeonatoTemporario, valor, colocacao);
+					apostas.add(aposta);
+				} else {throw new IllegalArgumentException("APOSTA NÃO REGISTRADA");}
+				
+			} else {throw new IllegalArgumentException("CAMPEONATO NÃO EXISTENTE");}
+		} else {throw new IllegalArgumentException("TIME NÃO EXISTE");}
 	}
 	
-	public void apostar(String id, String campeonato,String valor, int colocacao) {
-		Time timeTemporario = new Time(id, null, null);
-		Campeonato
+	public String statusDaAposta() {
+		String retorno = "";
+		for(int i = 0; i < apostas.size(); i++) {
+			if(apostas.get(i) != null) {
+				retorno += apostas.get(i).toString();
+			}
+		}
+		return retorno;
 	}
 
 	private boolean existeCampeonato(Campeonato campeonato) {
@@ -139,7 +176,7 @@ public class MrBeat {
 
 		return false;
 	}
-	
+
 	private boolean existeTime(Time time) {
 		for (int i = 0; i < times.size(); i++) {
 			if (times.get(i) != null && times.get(i).equals(time)) {
@@ -148,6 +185,7 @@ public class MrBeat {
 		}
 		return false;
 	}
+	
 
 	
 
