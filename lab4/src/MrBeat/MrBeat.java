@@ -15,15 +15,16 @@ public class MrBeat {
 		this.apostas = new ArrayList<>();
 	}
 
-	public void incluirTime(String id, String nome, String mascote) {
+	public String incluirTime(String id, String nome, String mascote) {
 		Time time = new Time(id, nome, mascote);
-
+		
 		if (existeTime(time)) {
-			System.out.println("TIME JÁ EXISTE!");
-		} else {
-			times.add(time);
-			System.out.println("INCLUSÃO REALIZADA!");
-		}
+			return "TIME JÁ EXISTE!";
+		} 
+		times.add(time);
+		return "INCLUSÃO REALIZADA!";
+		
+		
 
 	}
 
@@ -41,15 +42,15 @@ public class MrBeat {
 		return retorno;
 	}
 
-	public void adicionarCampeonato(String nome, int qtd) {
+	public String adicionarCampeonato(String nome, int qtd) {
 		Campeonato campeonato = new Campeonato(nome, qtd);
-
+		
 		if (existeCampeonato(campeonato)) {
-			System.out.println("Campeonato já existente");
-		} else {
-			campeonatos.add(campeonato);
-			System.out.println("Campeonato Cadastrado");
+			return "Campeonato já existente";
 		}
+		
+		campeonatos.add(campeonato);
+		return "INCLUSÃO REALIZADA!";
 	}
 
 	public boolean incluirTime(String id, String campeonato) {

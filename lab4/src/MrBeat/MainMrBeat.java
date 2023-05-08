@@ -121,7 +121,7 @@ public class MainMrBeat {
 		String nome = sc.nextLine();
 		System.out.print("Mascote: ");
 		String mascote = sc.nextLine();
-		mrbeat.incluirTime(id, nome, mascote);
+		System.out.println(mrbeat.incluirTime(id, nome, mascote));
 		
 		
 	}
