@@ -1,59 +1,59 @@
 package MrBeat;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.NoSuchElementException;
 
 public class MrBeat {
 
-	private ArrayList<Time> times;
-	private ArrayList<Campeonato> campeonatos;
+	private HashMap<String, Time> times;
+	private HashSet<Campeonato> campeonatos;
 	private ArrayList<Aposta> apostas;
 
 	public MrBeat() {
-		this.times = new ArrayList<>();
-		this.campeonatos = new ArrayList<>();
+		this.times = new HashMap<>();
+		this.campeonatos = new HashSet<>();
 		this.apostas = new ArrayList<>();
 	}
 
 	public String incluirTime(String id, String nome, String mascote) {
 		Time time = new Time(id, nome, mascote);
 		
-		if (existeTime(time)) {
+		if (times.containsKey(id)) {
 			return "TIME JÁ EXISTE!";
 		} 
-		times.add(time);
+		times.put(id, time);
 		return "INCLUSÃO REALIZADA!";
-		
-		
-
 	}
 
 	public String recuperarTime(String id) {
-		String retorno = "";
-		Time timeTemp = new Time(id, null, null);
-
-		if (times.contains(timeTemp)) {
-			int index = times.indexOf(timeTemp); // Pegando o objeto que contem o ID
-			retorno += times.get(index).toString();
-
-		} else {
-			retorno += "TIME NÃO EXISTE";
+		
+		if (times.containsKey(id)) {
+			return times.get(id).toString();
 		}
-		return retorno;
+		
+		throw new IllegalArgumentException("TIME NÃO EXISTE.");
 	}
 
 	public String adicionarCampeonato(String nome, int qtd) {
-		Campeonato campeonato = new Campeonato(nome, qtd);
-		
-		if (existeCampeonato(campeonato)) {
-			return "Campeonato já existente";
+		if (existeCampeonato(nome) == null) {
+			campeonatos.add(new Campeonato(nome, qtd));
+			return "CAMPEONATO ADICINADO";
 		}
-		
-		campeonatos.add(campeonato);
-		return "INCLUSÃO REALIZADA!";
+		throw new IllegalArgumentException("CAMPEONATO JÁ EXISTE");
 	}
 
 	public boolean incluirTime(String id, String campeonato) {
+		
+		if(!times.containsKey(id)){
+			throw new NoSuchElementException("TIME NÃO EXISTE");
+		}
+		
+		if(existeCampeonato(campeonato) == null) {
+			throw new NoSuchElementException("CAMPEONATO NÃO EXISTE")
+		}
+		
 		Time timeTemp = new Time(id, null, null);
 		Campeonato campTemp = new Campeonato(campeonato, 0);
 
@@ -167,15 +167,19 @@ public class MrBeat {
 		return retorno;
 	}
 
-	private boolean existeCampeonato(Campeonato campeonato) {
-		for (int i = 0; i < campeonatos.size(); i++) {
-			if (campeonatos.get(i) != null
-					&& campeonatos.get(i).getNome().toLowerCase().equals(campeonato.getNome().toLowerCase())) {
-				return true;
+	
+	// vendo se existe um campeonato ja existente
+	private Campeonato existeCampeonato(String nome) {
+		
+		Campeonato retorno = null;
+		Campeonato campTemporario =  new Campeonato(nome, 0);
+		for (Campeonato campeonato : campeonatos) {
+			if(campeonato.equals(campTemporario)) {
+				retorno = campeonato;
+				break;
 			}
 		}
-
-		return false;
+		return retorno;
 	}
 
 	private boolean existeTime(Time time) {

@@ -134,12 +134,17 @@ public class MainMrBeat {
 	}
 	
 	private static void adicionaCampeonato(MrBeat mrbeat, Scanner sc) {
-		sc.nextLine();
-		System.out.print("Campeonato: ");
-		String nome = sc.nextLine();
-		System.out.print("Participantes: ");
-		int qtd = sc.nextInt();
-		mrbeat.adicionarCampeonato(nome, qtd);
+		try {
+			sc.nextLine();
+			System.out.print("Campeonato: ");
+			String nome = sc.nextLine();
+			System.out.print("Participantes: ");
+			int qtd = sc.nextInt();
+			System.out.println(mrbeat.adicionarCampeonato(nome, qtd));
+		} catch (IllegalArgumentException error) {
+			System.out.println(error.getMessage());
+		}
+		
 	}
 	
 	private static void incluirOuVerificar(MrBeat mrbeat, Scanner sc) {
