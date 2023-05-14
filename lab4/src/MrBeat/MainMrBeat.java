@@ -1,9 +1,18 @@
 package MrBeat;
 
+import java.util.NoSuchElementException;
+
 import java.util.Scanner;
 
-public class MainMrBeat {
+/**
+ * Interface com menus textos para manipular um sistema de aposta.
+ * 
+ * @author Ronaldd Matias - 122110574
+ *
+ */
 
+public class MainMrBeat {
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		MrBeat mrBeat = new MrBeat();
@@ -81,9 +90,10 @@ public class MainMrBeat {
 				int colocacao = sc.nextInt();
 	
 				mrBeat.apostar(id, campeonato, valor, colocacao);
-				System.out.println("APOSTA FEITA!");
 				
 			} catch (IllegalArgumentException error) {
+				System.out.println(error.getMessage());
+			} catch(NoSuchElementException error) {
 				System.out.println(error.getMessage());
 			}
 			
@@ -157,13 +167,16 @@ public class MainMrBeat {
 		if(alternativa.toUpperCase().equals("I")) {
 			
 			try {
+				
 				System.out.print("Código: ");
 				String id = sc.nextLine();
 				System.out.print("Campeonato: ");
 				String campeonato = sc.nextLine();
-				mrbeat.incluirTime(id, campeonato);
-				System.out.println("TIME INCLUÍDO NO CAMPEONATO!");
-			} catch(IllegalArgumentException error) {
+				System.out.println(mrbeat.incluirTime(id, campeonato));
+				
+			} catch(NoSuchElementException error) {
+				System.out.println(error.getMessage());
+			} catch (IndexOutOfBoundsException error) {
 				System.out.println(error.getMessage());
 			}
 			
@@ -183,7 +196,7 @@ public class MainMrBeat {
 					System.out.println("TIME NÃO ESTA INCLUSO NO CAMPEONATO");
 				}
 				
-			} catch(IllegalArgumentException error) {
+			} catch(NoSuchElementException error) {
 				System.out.println(error.getMessage());
 			}
 			
