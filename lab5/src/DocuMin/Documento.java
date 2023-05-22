@@ -21,6 +21,11 @@ public class Documento {
 		this.titulo = titulo;
 		this.tamanhoMaximo = tamanhoMaximo;
 	}
+	
+
+	public String getTitulo() {
+		return titulo;
+	}
 
 	@Override
 	public int hashCode() {
@@ -34,7 +39,7 @@ public class Documento {
 		if (!(obj instanceof Documento))
 			return false;
 		Documento other = (Documento) obj;
-		return Objects.equals(titulo, other.titulo);
+		return getTitulo().equals(other.getTitulo());
 	}
 	
 	
