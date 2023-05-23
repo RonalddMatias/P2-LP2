@@ -10,11 +10,11 @@ public class Texto extends Elemento{
 	
 	@Override
 	public String gerarRepresentacaoCompleta() {
-		return valor;
+		return getValor();
 	}
 	
 	@Override
 	public String gerarRepresentacaoResumida() {
-		return valor;
+		return getValor();
 	}
 }
