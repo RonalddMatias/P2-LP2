@@ -7,6 +7,8 @@ public class Lista extends Elemento {
 	 private String caractereDeLista;
 	public Lista(int prioridade, String valor) {
 		super(prioridade, valor);
+		this.propriedades.put("separador", separador);
+		this.propriedades.put("caracter", caractereDeLista);
 		
 	}
 

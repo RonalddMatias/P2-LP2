@@ -14,7 +14,7 @@ public class Termos extends Elemento{
         this.ordem = ordem.toUpperCase();
 
         switch (ordem){
-            case "ALFABÉTICA" -> Arrays.sort(valor.split(propriedades.get("separador")), String.CASE_INSENSITIVE_ORDER);
+            case "ALFABÉTICA" -> Arrays.sort(valor.split(propriedades.get("separador")));
         }
     }
 

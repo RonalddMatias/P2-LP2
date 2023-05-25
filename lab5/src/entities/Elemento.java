@@ -8,7 +8,7 @@ import java.util.HashMap;
  *
  * @author Ronaldd Matias
  */
-public abstract class Elemento {
+public abstract class Elemento  implements  ElementoI{
 	
 	protected int prioridade;
 	

@@ -10,14 +10,16 @@ public class Titulo extends Elemento{
 		if(nivel < 1 || nivel > 5) {
 			throw new IllegalArgumentException();
 		}
-		this.nivel = nivel;
-		this.linkavel = linkavel;
+		this.propriedades.put("nivel", String.valueOf(nivel));
+		this.propriedades.put("linkável", String.valueOf(linkavel));
 	}
 	
 	//
 	@Override
 	public String gerarRepresentacaoCompleta() {
-		// TODO Auto-generated method stub
+		if(this.propriedades.get("linkável").equals("true")){
+
+		}
 		return null;
 	}
 
