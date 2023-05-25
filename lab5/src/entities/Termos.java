@@ -6,6 +6,7 @@ import java.util.Locale;
 public class Termos extends Elemento{
 	private String separador;
     private String ordem;
+    private String[] conteudoDoElemento;
 
     public Termos(int prioridade, String valor, String separador, String ordem) {
         super(prioridade, valor);
@@ -14,14 +15,15 @@ public class Termos extends Elemento{
         this.ordem = ordem.toUpperCase();
 
         switch (ordem){
-            case "ALFABÉTICA" -> Arrays.sort(valor.split(propriedades.get("separador")));
+            case "ALFABÉTICA" ->  Arrays.sort(valor.split(separador));
         }
     }
 
 
     @Override
     public String gerarRepresentacaoCompleta() {
-        return null;
+        String[] conteudoDoElemento = super.valor.split(separador);
+
     }
 
     @Override
@@ -29,3 +31,5 @@ public class Termos extends Elemento{
         return null;
     }
 }
+
+    private voif

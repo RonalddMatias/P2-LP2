@@ -8,7 +8,7 @@ import java.util.HashMap;
  *
  * @author Ronaldd Matias
  */
-public abstract class Elemento  implements  ElementoI{
+public class Elemento  implements  ElementoI{
 	
 	protected int prioridade;
 	
@@ -33,9 +33,14 @@ public abstract class Elemento  implements  ElementoI{
 		return valor;
 	}
 
-	public abstract String gerarRepresentacaoCompleta();
-	
-	public abstract String gerarRepresentacaoResumida();
-	
-	
+
+	@Override
+	public String gerarRepresentacaoCompleta() {
+		return null;
+	}
+
+	@Override
+	public String gerarRepresentacaoResumida() {
+		return null;
+	}
 }

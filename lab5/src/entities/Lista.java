@@ -14,12 +14,28 @@ public class Lista extends Elemento {
 
 	@Override
 	public String gerarRepresentacaoCompleta() {
-		return null;
+		String retorno = "";
+		String[] conteudoDoElemento = super.valor.split(separador);
+		for (int i = 0; i < conteudoDoElemento.length; i++){
+			if (conteudoDoElemento[i] != null){
+				retorno += "-"  + conteudoDoElemento[i] + "/n";
+			}
+		}
+
+		return retorno;
 	}
 
 	@Override
 	public String gerarRepresentacaoResumida() {
-		return null;
+		String retorno = "";
+		String[] conteudoDoElemento = super.valor.split(separador);
+
+		for (int i = 0; i < conteudoDoElemento.length; i++){
+			if (conteudoDoElemento[i] != null) {
+				retorno += conteudoDoElemento[i] + "/n";
+			}
+		}
+		return retorno;
 	}
 
 
