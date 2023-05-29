@@ -1,7 +1,12 @@
 package DocuMin;
 
-public class ControllerElemento {
+import entities.Elemento;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class ControllerElemento {
+	private ArrayList<Elemento> elementos;
 	public void criarElemento() {
 
 	}

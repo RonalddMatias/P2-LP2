@@ -3,9 +3,10 @@ package entities;
 import java.util.HashMap;
 
 public class Texto extends Elemento {
-
-	public Texto(int prioridade, String valor) {
+	private String titulo;
+	public Texto(int prioridade, String valor, String titulo) {
 		super(prioridade, valor);
+		this.titulo = titulo;
 	}
 	
 	@Override

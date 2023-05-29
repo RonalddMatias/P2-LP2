@@ -13,20 +13,29 @@ public class Titulo extends Elemento{
 		this.propriedades.put("nivel", String.valueOf(nivel));
 		this.propriedades.put("linkável", String.valueOf(linkavel));
 	}
-	
-	//
+
+	public int getNivel() {
+		return nivel;
+	}
+
 	@Override
 	public String gerarRepresentacaoCompleta() {
 		if(this.propriedades.get("linkável").equals("true")){
-
+			return formatacao();
 		}
-		return null;
+
+		return getNivel() + ". " + getValor();
 	}
 
 	@Override
 	public String gerarRepresentacaoResumida() {
-		// TODO Auto-generated method stub
-		return null;
+		return getNivel() + ". " + getValor();
+	}
+
+
+	// trocando os espacos por espacos em branco e dando um UPPERCASE;
+	private String formatacao(){
+		return getNivel() + ". " + getValor() + " -- " + getNivel() + "-" + getValor().replaceAll(" ", "").toUpperCase();
 	}
 	
 }

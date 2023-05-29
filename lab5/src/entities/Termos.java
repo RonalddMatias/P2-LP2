@@ -6,7 +6,6 @@ import java.util.Locale;
 public class Termos extends Elemento{
 	private String separador;
     private String ordem;
-    private String[] conteudoDoElemento;
 
     public Termos(int prioridade, String valor, String separador, String ordem) {
         super(prioridade, valor);
@@ -22,8 +21,25 @@ public class Termos extends Elemento{
 
     @Override
     public String gerarRepresentacaoCompleta() {
+        String retorno = "";
         String[] conteudoDoElemento = super.valor.split(separador);
+        System.out.println("Total de termos: " + conteudoDoElemento.length);
 
+        if (this.ordem.equalsIgnoreCase("ALFABÉTICA")) {
+             Arrays.sort(conteudoDoElemento);
+                for (int i = 0; i < conteudoDoElemento.length; i++){
+                    retorno += "- " + conteudoDoElemento[i] + " ";
+              }
+        } else if (this.ordem.equalsIgnoreCase("TAMANHO")) {
+            
+        } else {
+            Arrays.sort(conteudoDoElemento);
+            for (int i = 0; i < conteudoDoElemento.length; i++){
+                retorno += "- " + conteudoDoElemento[i] + " ";
+            }
+        }
+
+        return retorno;
     }
 
     @Override
@@ -31,5 +47,3 @@ public class Termos extends Elemento{
         return null;
     }
 }
-
-    private voif

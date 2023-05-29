@@ -7,7 +7,7 @@ public class ControllerDocumento {
 	
 	private HashMap<String, Documento> documentos;
 
-	public ControllerDocumento(HashMap<String, Documento> documentos) {
+	public ControllerDocumento() {
 		this.documentos = new HashMap<>();
 	}
 	
@@ -50,7 +50,7 @@ public class ControllerDocumento {
 		documentos.remove(titulo);
 	}
 	
-	// Irá retorna a quantidade de elementos cadastrados dentro de um sistema.
+	// Irá retorna a quantidade de elementos cadastrados dentro de um documento.
 	public int contarElementos(String titulo) {
 		return 0;
 	}
