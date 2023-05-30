@@ -7,9 +7,6 @@ import java.util.HashMap;
 
 public class ControllerElemento {
 	private ArrayList<Elemento> elementos;
-	public void criarElemento() {
-
-	}
 
 	public void moverUmaPosicaoAcima() {
 

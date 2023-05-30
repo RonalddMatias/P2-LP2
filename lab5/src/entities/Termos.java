@@ -44,6 +44,26 @@ public class Termos extends Elemento{
 
     @Override
     public String gerarRepresentacaoResumida() {
-        return null;
+        String retorno = "";
+        String[] conteudoDoElemento = super.valor.split(separador);
+
+        if(this.ordem.equalsIgnoreCase("ALFABÉTICA") || this.ordem.equalsIgnoreCase("TAMANHO") ){
+            Arrays.sort(conteudoDoElemento);
+            for(int i = 0; i < conteudoDoElemento.length; i++){
+                if (i == conteudoDoElemento.length - 1){ // saber se é o ultimo elemento do array
+                    retorno += conteudoDoElemento[i];
+                }
+                retorno += conteudoDoElemento[i] + "/";
+            }
+        } else {
+            for(int i = 0; i < conteudoDoElemento.length; i++){
+                if (i == conteudoDoElemento.length - 1){ // saber se é o ultimo elemento do array
+                    retorno += conteudoDoElemento[i];
+                }
+                retorno += conteudoDoElemento[i] + "/";
+            }
+        }
+
+        return retorno;
     }
 }

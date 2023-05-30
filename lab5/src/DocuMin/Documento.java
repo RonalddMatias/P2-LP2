@@ -1,5 +1,8 @@
 package DocuMin;
 
+import entities.Elemento;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -11,7 +14,8 @@ import java.util.Objects;
 public class Documento {
 	
 	private String titulo;
-	private int tamanhoMaximo ;
+	private int tamanhoMaximo;
+	private ArrayList<Elemento> elementos;
 	
 	public Documento(String titulo) {	
 		this.titulo = titulo;
@@ -20,8 +24,25 @@ public class Documento {
 	public Documento(String titulo, int tamanhoMaximo) {
 		this.titulo = titulo;
 		this.tamanhoMaximo = tamanhoMaximo;
+		this.elementos = new ArrayList<Elemento>(tamanhoMaximo);
 	}
-	
+
+	public int adicionaElementos(Elemento elemento){
+		elementos.add(elemento);
+		return verificaElemento(elemento);
+	}
+
+	private int verificaElemento(Elemento elemento) {
+		int retorno = 0;
+		if (elementos.contains(elemento)){
+			retorno = elementos.indexOf(elemento);
+		}
+		return  retorno;
+	}
+
+	public ArrayList<Elemento> getElementos() {
+		return elementos;
+	}
 
 	public String getTitulo() {
 		return titulo;
