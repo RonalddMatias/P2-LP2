@@ -1,7 +1,6 @@
 package DocuMin;
 
-import entities.Elemento;
-import entities.Texto;
+import entities.*;
 
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -73,12 +72,30 @@ public class ControllerDocumento {
 
 
 	public int criarTexto(String tituloDoc, String valor, int prioridade) {
-		Documento documento = pegarResumoEspecifico(tituloDoc);
-		Elemento elemento = new Texto(prioridade, valor);
-		return documento.adicionaElementos(elemento);
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		Elemento texto = new Texto(prioridade, valor);
+		return documento.adicionaElementos(texto);
 	}
 
-	private Documento pegarResumoEspecifico(String titulo){
+	public int criarTitulo(String tituloDoc, String valor, int prioridade, int nivel, boolean linkavel){
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		Elemento titulo = new Titulo(prioridade,valor,nivel, linkavel);
+		return documento.adicionaElementos(titulo);
+	}
+
+	public int criarLista(String tituloDoc, String valorLista, int prioridade, String separador, String charLista){
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		Elemento lista = new Lista(prioridade,tituloDoc, valorLista, separador, charLista);
+		return documento.adicionaElementos(lista);
+	}
+
+	public int criarTermo(String tituloDoc, String valorTermo, int prioridade, String separador, String ordem){
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		Elemento termo = new Termos(prioridade, valorTermo,separador,ordem);
+		return documento.adicionaElementos(termo);
+	}
+
+	private Documento pegarDocumentoEspecifico(String titulo){
 		Documento documento = documentos.get(titulo);
 		if(documento == null) {throw new NoSuchElementException("Elemento não encontrado");}
 		return documento;
@@ -91,4 +108,15 @@ public class ControllerDocumento {
 		return false;
 	}
 
+	public String pegaRepresentacaoCompleta(String tituloDoc, int elementoPosicao) {
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		return documento.getElemento(elementoPosicao).gerarRepresentacaoCompleta();
+	}
+
+	public String pegarRepresentacaoResumida(String tituloDoc, int elementoPosicao){
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		return documento.getElemento(elementoPosicao).gerarRepresentacaoResumida();
+	}
+
+	
 }

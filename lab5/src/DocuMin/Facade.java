@@ -2,11 +2,9 @@ package DocuMin;
 
 public class Facade {
     private ControllerDocumento controllerDocumento;
-    private ControllerElemento controllerElemento;
 
     public Facade(ControllerDocumento controllerDocumento) {
         this.controllerDocumento = new ControllerDocumento();
-        this.controllerElemento = new ControllerElemento();
     }
 
     public boolean addDocumento(String Titulo){
@@ -34,18 +32,18 @@ public class Facade {
     }
 
     public int criarTitulo(String tituloDoc, String valor, int prioridade, int nivel, boolean linkavel){
-        return 0;
+        return controllerDocumento.criarTitulo(tituloDoc,valor,prioridade,nivel,linkavel);
     }
     public int criarLista(String tituloDoc, String valorLista, int prioridade, String separador, String charLista){
-        return 0;
+        return controllerDocumento.criarLista(tituloDoc,valorLista,prioridade,separador,charLista);
     }
 
-    public int criarTermo(String tituloDoc, String valorTermos, int prioridade, String separador, String ordem){
-        return 0;
+    public int criarTermo(String tituloDoc, String valorTermo, int prioridade, String separador, String ordem){
+        return controllerDocumento.criarTermo(tituloDoc,valorTermo, prioridade,separador,ordem);
     }
 
     public String PegarRepresentacaoCompleta(String tituloDoc, int elementoPosicao){
-        return null;
+        return controllerDocumento.pegaRepresentacaoCompleta(tituloDoc, elementoPosicao);
     }
 
     public String PegarRepresentacaoResumida(String tituloDoc, int elementoPosicao){

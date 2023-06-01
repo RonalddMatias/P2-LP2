@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Locale;
 
 public class Termos extends Elemento{
@@ -12,10 +13,6 @@ public class Termos extends Elemento{
         this.propriedades.put("separador", separador);
         this.propriedades.put("ordem", ordem);
         this.ordem = ordem.toUpperCase();
-
-        switch (ordem){
-            case "ALFABÉTICA" ->  Arrays.sort(valor.split(separador));
-        }
     }
 
 
@@ -24,14 +21,17 @@ public class Termos extends Elemento{
         String retorno = "";
         String[] conteudoDoElemento = super.valor.split(separador);
         System.out.println("Total de termos: " + conteudoDoElemento.length);
-
+        switch (ordem){
+            case "ALFABÉTICO" -> Arrays.sort(conteudoDoElemento);
+            case "TAMANHO" -> Arrays.sort(conteudoDoElemento, (s1, s2) -> Integer.compare(s2.length(), s1.length()));
+        }
         if (this.ordem.equalsIgnoreCase("ALFABÉTICA")) {
              Arrays.sort(conteudoDoElemento);
                 for (int i = 0; i < conteudoDoElemento.length; i++){
                     retorno += "- " + conteudoDoElemento[i] + " ";
               }
         } else if (this.ordem.equalsIgnoreCase("TAMANHO")) {
-            
+
         } else {
             Arrays.sort(conteudoDoElemento);
             for (int i = 0; i < conteudoDoElemento.length; i++){
@@ -67,3 +67,4 @@ public class Termos extends Elemento{
         return retorno;
     }
 }
+

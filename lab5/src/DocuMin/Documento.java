@@ -19,6 +19,8 @@ public class Documento {
 	
 	public Documento(String titulo) {	
 		this.titulo = titulo;
+		this.elementos = new ArrayList<>();
+		this.tamanhoMaximo = Integer.MAX_VALUE;
 	}
 
 	public Documento(String titulo, int tamanhoMaximo) {
@@ -28,20 +30,17 @@ public class Documento {
 	}
 
 	public int adicionaElementos(Elemento elemento){
-		elementos.add(elemento);
-		return verificaElemento(elemento);
-	}
-
-	private int verificaElemento(Elemento elemento) {
-		int retorno = 0;
-		if (elementos.contains(elemento)){
-			retorno = elementos.indexOf(elemento);
+		if(elementos.size() <= this.tamanhoMaximo){
+			elementos.add(elemento);
 		}
-		return  retorno;
+		return elementos.size()-1;
 	}
-
 	public ArrayList<Elemento> getElementos() {
 		return elementos;
+	}
+
+	public Elemento getElemento(int posicao){
+		return elementos.get(posicao);
 	}
 
 	public String getTitulo() {

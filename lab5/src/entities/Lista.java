@@ -2,11 +2,9 @@ package entities;
 
 public class Lista extends Elemento {
 	 private String separador;
-	 private String titulo;
 	 private String caractereDeLista;
-	public Lista(int prioridade,String titulo, String valor) {
+	public Lista(int prioridade,String titulo, String valor, String separador, String caractereDeLista) {
 		super(prioridade, valor);
-		this.titulo = titulo;
 		this.propriedades.put("separador", separador);
 		this.propriedades.put("caracter", caractereDeLista);
 		
