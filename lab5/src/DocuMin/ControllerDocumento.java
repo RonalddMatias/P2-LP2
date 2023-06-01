@@ -118,5 +118,13 @@ public class ControllerDocumento {
 		return documento.getElemento(elementoPosicao).gerarRepresentacaoResumida();
 	}
 
-	
+	public boolean apagarElemento(String tituloDoc, int elementoPosicao){
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		return documento.removerElemento(elementoPosicao);
+	}
+
+	public int criarAtalho(String tituloDoc, String tituloDocReferenciado) {
+		Documento documento = pegarDocumentoEspecifico(tituloDoc);
+		return 0;
+	}
 }

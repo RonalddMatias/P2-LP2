@@ -35,6 +35,14 @@ public class Documento {
 		}
 		return elementos.size()-1;
 	}
+
+	public boolean removerElemento(int posicao){
+		if(elementos.get(posicao) != null){
+			elementos.remove(posicao);
+			return true;
+		}
+		return false;
+	}
 	public ArrayList<Elemento> getElementos() {
 		return elementos;
 	}

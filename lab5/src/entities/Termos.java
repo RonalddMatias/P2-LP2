@@ -25,20 +25,10 @@ public class Termos extends Elemento{
             case "ALFABÉTICO" -> Arrays.sort(conteudoDoElemento);
             case "TAMANHO" -> Arrays.sort(conteudoDoElemento, (s1, s2) -> Integer.compare(s2.length(), s1.length()));
         }
-        if (this.ordem.equalsIgnoreCase("ALFABÉTICA")) {
-             Arrays.sort(conteudoDoElemento);
-                for (int i = 0; i < conteudoDoElemento.length; i++){
-                    retorno += "- " + conteudoDoElemento[i] + " ";
-              }
-        } else if (this.ordem.equalsIgnoreCase("TAMANHO")) {
 
-        } else {
-            Arrays.sort(conteudoDoElemento);
-            for (int i = 0; i < conteudoDoElemento.length; i++){
-                retorno += "- " + conteudoDoElemento[i] + " ";
-            }
+        for (int i = 0; i < conteudoDoElemento.length; i++){
+            retorno += "- " + conteudoDoElemento[i] + " ";
         }
-
         return retorno;
     }
 

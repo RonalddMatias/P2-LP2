@@ -47,17 +47,21 @@ public class Facade {
     }
 
     public String PegarRepresentacaoResumida(String tituloDoc, int elementoPosicao){
-        return null;
+        return controllerDocumento.pegarRepresentacaoResumida(tituloDoc, elementoPosicao);
     }
 
     public boolean apagarElemento(String tituloDoc, int elementoPosicao){
-        return true;
+        return controllerDocumento.apagarElemento(tituloDoc, elementoPosicao);
     }
 
     public void moverParaCima(String tituloDoc, int elementoPosicao){
 
     }
     public void moverParaBaixo(String tituloDoc, int elementoPosicao){
+    }
+
+    public int criarAtalho(String tituloDoc, String tituloDocReferenciado){
+        return controllerDocumento.criarAtalho(tituloDoc, tituloDocReferenciado);
     }
 
 
