@@ -55,7 +55,7 @@ public class Facade {
     }
 
     public void moverParaCima(String tituloDoc, int elementoPosicao){
-
+        controllerDocumento.moverParaCima(tituloDoc, elementoPosicao);
     }
     public void moverParaBaixo(String tituloDoc, int elementoPosicao){
     }
@@ -63,6 +63,27 @@ public class Facade {
     public int criarAtalho(String tituloDoc, String tituloDocReferenciado){
         return controllerDocumento.criarAtalho(tituloDoc, tituloDocReferenciado);
     }
+
+    public int criarVisaoCompleta(String tituloDoc){
+        return controllerDocumento.criarVisaoCompleta(tituloDoc);
+    }
+
+    public int criarVisaoResumida(String tituloDoc){
+        return controllerDocumento.criarVisaoResumida(tituloDoc);
+    }
+    public int criarVisaoPrioritaria(String tituloDoc, int prioridade){
+        return controllerDocumento.criarVisaoPrioritaria(tituloDoc, prioridade);
+    }
+
+    public int criarVisao(String tituloDoc){
+        return controllerDocumento.criarVisaoTitulo(tituloDoc);
+    }
+
+    public String[] exibirVisao(int visaoId){
+        return controllerDocumento.exibirVisao(visaoId);
+    }
+
+
 
 
 

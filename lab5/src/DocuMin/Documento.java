@@ -3,6 +3,8 @@ package DocuMin;
 import entities.Elemento;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -16,11 +18,14 @@ public class Documento {
 	private String titulo;
 	private int tamanhoMaximo;
 	private ArrayList<Elemento> elementos;
+
+	private boolean temAtalho;
 	
 	public Documento(String titulo) {	
 		this.titulo = titulo;
 		this.elementos = new ArrayList<>();
 		this.tamanhoMaximo = Integer.MAX_VALUE;
+		this.temAtalho = false;
 	}
 
 	public Documento(String titulo, int tamanhoMaximo) {
@@ -55,6 +60,27 @@ public class Documento {
 		return titulo;
 	}
 
+	public void setTemAtalho(boolean temAtalho) {
+		this.temAtalho = temAtalho;
+	}
+
+	public boolean isTemAtalho() {
+		return temAtalho;
+	}
+
+	public int calculaMediaElementos(){
+		int retorno = 0;
+		for (int i = 0; i < elementos.size(); i++){
+			retorno += elementos.get(i).getPrioridade();
+		}
+		return retorno;
+	}
+
+	public int quantidadeElementos(){
+		return elementos.size();
+	}
+
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(titulo);
@@ -69,8 +95,19 @@ public class Documento {
 		Documento other = (Documento) obj;
 		return getTitulo().equals(other.getTitulo());
 	}
-	
-	
-	
-	
+
+
+	public void moverParaCima(int elementoPosicao) {
+		if(elementoPosicao >= 0 && elementoPosicao < quantidadeElementos()){
+			Collections.swap(elementos, elementoPosicao, elementoPosicao - 1);
+		} else{
+			throw new IllegalArgumentException("Posicao inválida");
+		}
+	}
+
+	public void moverParaBaixo(int elementoPosicao){
+		if(elementoPosicao >= 0 && elementoPosicao < quantidadeElementos()-1){
+			Collections.swap(elementos, elementoPosicao, elementoPosicao + 1);
+		}
+	}
 }

@@ -1,20 +1,36 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Atalho extends Elemento{
 
-    private
+    private ArrayList<Elemento> elementos;
 
-    Atalho(int prioridade, String valor, String idReferenciado) {
+    public Atalho(int prioridade, String valor, ArrayList<Elemento> elementos) {
         super(prioridade, valor);
+        this.elementos = elementos;
     }
 
     @Override
     public String gerarRepresentacaoCompleta() {
-        return null;
+        String retorno = "";
+        for (int i = 1; i < elementos.size(); i++){
+            if (elementos.get(i).getPrioridade() == 4 || elementos.get(i).getPrioridade() == 5){
+                retorno += elementos.get(i).gerarRepresentacaoCompleta() + "\n";
+            }
+        }
+        return retorno;
     }
 
     @Override
     public String gerarRepresentacaoResumida() {
-        return null;
+        String retorno = "";
+        for (int i = 1; i < elementos.size(); i++){
+            if (elementos.get(i).getPrioridade() == 4 || elementos.get(i).getPrioridade() == 5){
+                retorno += elementos.get(i).gerarRepresentacaoResumida() + "\n";
+            }
+        }
+        return retorno;
     }
 }
