@@ -12,13 +12,7 @@ public class ControllerDocumento {
 	private ControllerVisao visaoController;
 
 	public ControllerDocumento() {
-		this.documentos = new HashMap<>();@Test
-    @DisplayName("Quando quero remover Documento com sucesso")
-    public void testandoRemoverDocumento(){
-        controllerDocumento.criarDocumento("P2");
-        controllerDocumento.removerDocumento("P2");
-        assertEquals(0, controllerDocumento.quantidadeDeDocumetos());
-    }
+		this.documentos = new HashMap<>();
 	}
 
 	public int quantidadeDeDocumetos(){
@@ -63,17 +57,8 @@ public class ControllerDocumento {
 	
 	// Irá retorna a quantidade de elementos cadastrados dentro de um documento.
 	public int contarElementos(String titulo) {
-		int cont = 0;
-		if(!documentos.containsKey(titulo)){
-			throw new NoSuchElementException("Documento não cadastrado");
-		}
-		Documento documento = documentos.get(titulo);
-		for (int i = 0; i < documento.getElementos().size(); i++){
-			if (documento.getElementos().get(i) != null){
-				cont++;
-			}
-		}
-		return cont;
+		Documento documento = pegarDocumentoEspecifico(titulo);
+		return documento.quantidadeElementos();
 	}
 	
 	// Irá retorna uma representação dos elementos que podem ter em um determinado documento.
@@ -110,7 +95,7 @@ public class ControllerDocumento {
 		return documento.adicionaElementos(termo);
 	}
 
-	private Documento pegarDocumentoEspecifico(String titulo){
+	public Documento pegarDocumentoEspecifico(String titulo){
 		Documento documento = documentos.get(titulo);
 		if(documento == null) {throw new NoSuchElementException("Elemento não encontrado");}
 		return documento;
