@@ -7,10 +7,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Classe que representa testes do documentoController
+ *
+ * @author Ronaldd Matias - 122110574
+ */
 public class ControllerDocumentoTest {
     private ControllerDocumento controllerDocumento;
 
@@ -154,12 +160,201 @@ public class ControllerDocumentoTest {
     public void testandoAtalho02(){
         controllerDocumento.criarDocumento("PP");
         controllerDocumento.criarDocumento("PLP");
-        Documento documento = controllerDocumento.pegarDocumentoEspecifico("PLP");
-        documento.setTemAtalho(true);
         controllerDocumento.criarTexto("PLP", "Cadeira muito boa", 3);
         controllerDocumento.criarTexto("PLP", "Programacao extra", 2);
+        controllerDocumento.criarAtalho("PP", "PLP");
         assertThrows(IllegalArgumentException.class,()-> controllerDocumento.criarAtalho("PP", "PLP"));
     }
+
+    @Test
+    @DisplayName("Criando atalho pra um Documento, mas o primeiro documento ja tem tem um atalho")
+    public void testandoAtalho03(){
+        controllerDocumento.criarDocumento("PP");
+        controllerDocumento.criarDocumento("PLP");
+        controllerDocumento.criarDocumento("FMCC1");
+        controllerDocumento.criarTexto("PLP", "Cadeira muito boa", 3);
+        controllerDocumento.criarTexto("PLP", "Programacao extra", 2);
+        controllerDocumento.criarTexto("FMCC1", "uma cadeira muito legal", 4);
+        controllerDocumento.criarAtalho("PP", "FMCC1");
+        assertThrows(IllegalArgumentException.class,()-> controllerDocumento.criarAtalho("PP", "PLP"));
+    }
+
+    @Test
+    @DisplayName("Criando atalho para um documento que não possui elementos")
+    public void testandoAtalho04(){
+        controllerDocumento.criarDocumento("PP");
+        controllerDocumento.criarDocumento("PLP");
+        assertThrows(IllegalArgumentException.class,()-> controllerDocumento.criarAtalho("PP", "PLP"));
+    }
+
+    @Test
+    @DisplayName("Exibindo um documento com sucesso")
+    public void testandoExibirDocumento(){
+        controllerDocumento.criarDocumento("Gamer");
+        controllerDocumento.criarTexto("Gamer", "valorant é bom", 4);
+        String[] exibirDoc = controllerDocumento.exibirDocumento("Gamer");
+        assertArrayEquals(exibirDoc, controllerDocumento.exibirDocumento("Gamer"));
+    }
+
+    @Test
+    @DisplayName("Exibindo um documento, porém o documento não existe")
+    public void testandoExibirDocumento02(){
+        controllerDocumento.criarDocumento("Gamer");
+        controllerDocumento.criarTexto("Gamer", "valorant é bom", 4);
+        assertThrows(NoSuchElementException.class,() -> controllerDocumento.exibirDocumento("JLp2"));
+    }
+
+    @Test
+    @DisplayName("Exibindo com sucesso a representacao resumida de um  elemento texto")
+    public void testandoRepresentacaoResumidaTexto(){
+        controllerDocumento.criarDocumento("RBD");
+        controllerDocumento.criarTexto("RBD", "gosto muito de RBD", 4);
+        assertEquals("gosto muito de RBD", controllerDocumento.pegarRepresentacaoResumida("RBD", 1));
+    }
+    @Test
+    @DisplayName("Exibindo a representacao resumida de um elemento texto, porém, a posicao é invalida")
+    public void testandoRepresentacaoResumidaTexto02(){
+        controllerDocumento.criarDocumento("RBD");
+        controllerDocumento.criarTexto("RBD", "gosto muito de RBD", 4);
+        String exemplo = controllerDocumento.pegarRepresentacaoResumida("RBD", 1);
+        assertThrows(IndexOutOfBoundsException.class,() -> controllerDocumento.pegarRepresentacaoResumida("RBD", 2));
+    }
+
+    @Test
+    @DisplayName("Exibindo a representacao resumida de um elemento texto, porém, o documento não existe")
+    public void testandoRepresentacaoResumidaTexto03(){
+        controllerDocumento.criarDocumento("RBD");
+        controllerDocumento.criarTexto("RBD", "gosto muito de RBD", 4);
+        String exemplo = controllerDocumento.pegarRepresentacaoResumida("RBD", 1);
+        assertThrows(NoSuchElementException.class,() -> controllerDocumento.pegarRepresentacaoResumida("Juazeirinho", 2));
+    }
+
+    @Test
+    @DisplayName("Exibindo com sucesso a representacao resumida de um  elemento termo")
+    public void testandoRepresentacaoResumidaTermo(){
+        controllerDocumento.criarDocumento("DRX");
+        controllerDocumento.criarTermo("DRX", "banana/uva/abacaxi", 4, "/", "ALFABÉTICA");
+        String exemplo = controllerDocumento.pegarRepresentacaoResumida("DRX", 1);
+        assertEquals(exemplo, controllerDocumento.pegarRepresentacaoResumida("DRX", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com sucesso a representacao resumida de um  elemento termo")
+    public void testandoRepresentacaoResumidaTermo02(){
+        controllerDocumento.criarDocumento("DRX");
+        controllerDocumento.criarTermo("DRX", "teste/termos/aleatorios", 4, "/", "ALFABÉTICA");
+        String exemplo = controllerDocumento.pegarRepresentacaoResumida("DRX", 1);
+        assertEquals("aleatorios / termos / teste", controllerDocumento.pegarRepresentacaoResumida("DRX", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com sucesso a representacao resumida de um  elemento Lista")
+    public void testandoRepresentacaoResumidaLista(){
+        controllerDocumento.criarDocumento("JOAO");
+        controllerDocumento.criarLista("JOAO", "exemplo|de uma lista|de 3 termos", 3,"|","-");
+        assertEquals("exemplo | de uma lista | de 3 termos", controllerDocumento.pegarRepresentacaoResumida("JOAO", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com sucesso a representacao resumida de um  elemento atalho")
+    public void testandoRepresentacaoResumidaAtalho(){
+        controllerDocumento.criarDocumento("JOAO");
+        controllerDocumento.criarDocumento("HENRIQUE");
+        controllerDocumento.criarTexto("HENRIQUE", "joao é legal", 5);
+        controllerDocumento.criarTexto("JOAO", "ele ama PLP", 5);
+        controllerDocumento.criarTexto("JOAO", "Joseana é uma otima professora", 2);
+        controllerDocumento.criarTexto("HENRIQUE", "ta comendo bolo de nutela", 4);
+        controllerDocumento.criarAtalho("JOAO", "HENRIQUE");
+        System.out.println(controllerDocumento.pegarRepresentacaoResumida("HENRIQUE", 3));
+        assertEquals("joao é legal\nele ama PLP\n", controllerDocumento.pegarRepresentacaoResumida("HENRIQUE", 3));
+    }
+
+    @Test
+    @DisplayName("Exibindo com sucesso a representacao resumida de um elemento titulo")
+    public void testandoRepresentacaoResumidaTitulo(){
+        controllerDocumento.criarDocumento("FLAMENGO");
+        controllerDocumento.criarTitulo("FLAMENGO", "Elementos Simples", 3,3,false);
+        assertEquals("1. Elementos Simples", controllerDocumento.pegarRepresentacaoResumida("FLAMENGO", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um Elemento titulo")
+    public void testandoRepresentacaoCompletaTexto(){
+        controllerDocumento.criarDocumento("Champions");
+        controllerDocumento.criarTexto("Champions", "city vai ganhar", 4);
+        assertEquals("city vai ganhar", controllerDocumento.pegaRepresentacaoCompleta("Champions", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um Elemento termo em ordem ALFABETICA")
+    public void testandoRepresentacaoCompletaTermo01(){
+        controllerDocumento.criarDocumento("Champions");
+        controllerDocumento.criarTermo("Champions", "Teste/termos/Aleatórios", 5, "/", "ALFABÉTICA");
+        assertEquals("Total de termos: 3\n- Aleatórios, termos, Teste", controllerDocumento.pegaRepresentacaoCompleta("Champions", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um Elemento termo em ordem TAMANHO")
+    public void testandoRepresentacaoCompletaTermo02(){
+        controllerDocumento.criarDocumento("Champions");
+        controllerDocumento.criarTermo("Champions", "Teste/termos/Aleatórios", 5, "/", "TAMANHO");
+        assertEquals("Total de termos: 3\n- Aleatórios, termos, Teste", controllerDocumento.pegaRepresentacaoCompleta("Champions", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um Elemento termo em ordem NENHUM")
+    public void testandoRepresentacaoCompletaTermo03(){
+        controllerDocumento.criarDocumento("Champions");
+        controllerDocumento.criarTermo("Champions", "Teste/termos/Aleatórios", 5, "/", "NENHUM");
+        assertEquals("Total de termos: 3\n- Teste, termos, Aleatórios", controllerDocumento.pegaRepresentacaoCompleta("Champions", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um elemento Termo com o linkavel true")
+    public void testandoRepresentacaoCompletaTitulo01(){
+        controllerDocumento.criarDocumento("Liberdade");
+        controllerDocumento.criarTitulo("Liberdade", "Documentos Texto", 4, 1, true);
+        assertEquals("0. Documentos Texto -- \n0-DOCUMENTOSTEXTO", controllerDocumento.pegaRepresentacaoCompleta("Liberdade", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um elemento Termo com o linkavel false")
+    public void testandoRepresentacaoCompletaTitulo02(){
+        controllerDocumento.criarDocumento("Liberdade");
+        controllerDocumento.criarTitulo("Liberdade", "Documentos Texto", 4, 1, false);
+        assertEquals("1.Documentos Texto", controllerDocumento.pegaRepresentacaoCompleta("Liberdade", 1));
+    }
+
+    @Test
+    @DisplayName("Exibindo com Sucesso a representacao completa de um elemento Lista")
+    public void testandoRepresentacaoCompletaLista01(){
+        controllerDocumento.criarDocumento("FLAMENGO");
+        controllerDocumento.criarLista("FLAMENGO", "Exemplo|de uma lista|de 3 termos", 3,"|", "-");
+        assertEquals("-Exemplo\n-de uma lista\n-de 3 termos\n", controllerDocumento.pegaRepresentacaoCompleta("FLAMENGO", 1));
+    }
+
+    @Test
+    @DisplayName("Testando mover para cima")
+    public void moverParaCima(){
+        controllerDocumento.criarDocumento("Juazeirinho");
+        controllerDocumento.criarTexto("Juazeirinho", "Terra Boa", 4);
+        controllerDocumento.criarTexto("Juazeirinho", "terra maravilhosa", 5);
+        controllerDocumento.moverParaCima("Juazeirinho", 1);
+        assertEquals("terra maravilhosa", controllerDocumento.pegaRepresentacaoCompleta("Juazeirinho", 1));
+    }
+
+    @Test
+    @DisplayName("Testando mover para baixo")
+    public void moverParaBaixo(){
+        controllerDocumento.criarDocumento("Juazeirinho");
+        controllerDocumento.criarTexto("Juazeirinho", "Terra Boa", 4);
+        controllerDocumento.criarTexto("Juazeirinho", "terra maravilhosa", 5);
+        controllerDocumento.criarTexto("Juazeirinho", "eu te amo jua", 4);
+        controllerDocumento.criarTexto("Juazeirinho", "chover chover", 3);
+        controllerDocumento.moverParaBaixo("Juazeirinho", 2);
+        assertEquals("chover chover", controllerDocumento.pegaRepresentacaoCompleta("Juazeirinho", 3));
+    }
+
 
 }
 
