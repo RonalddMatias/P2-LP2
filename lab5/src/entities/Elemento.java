@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Classe abstrata Elemento que tem como objetivo criar
  * objetos do tipo elemento. Recendo como parâmetros uma prioridade(int), valor(Stirng) e propriedades(HashMap).
  *
- * @author Ronaldd Matias
+ * @author Ronaldd Matias - 122110574
  */
 public abstract class Elemento  implements  ElementoI{
 	protected int prioridade;

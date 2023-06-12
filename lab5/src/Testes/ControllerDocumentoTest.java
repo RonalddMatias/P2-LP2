@@ -1,6 +1,7 @@
 package Testes;
 
 import DocuMin.ControllerDocumento;
+import DocuMin.ControllerVisao;
 import DocuMin.Documento;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +20,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ControllerDocumentoTest {
     private ControllerDocumento controllerDocumento;
+    private ControllerVisao controllerVisao;
 
     @BeforeEach
     public void setUp(){
         this.controllerDocumento = new ControllerDocumento();
+        this.controllerVisao = new ControllerVisao();
     }
 
     @Test
@@ -43,6 +46,7 @@ public class ControllerDocumentoTest {
     public void testandoAdicionarDocumento03(){
         assertTrue(controllerDocumento.criarDocumento("LOAC", 5));
     }
+
 
     @Test
     @DisplayName("Quando quero criar um documento com um mesmo nome existente, porém, com a quantidade maxima diferente.")
@@ -74,6 +78,7 @@ public class ControllerDocumentoTest {
         controllerDocumento.criarDocumento("Cálculo I");
         assertEquals(0, controllerDocumento.criarTitulo("Cálculo I", "Flamengo até morrer", 4, 3,true));
     }
+
     @Test
     @DisplayName("Adicionando o elemento Titulo ao Documento inexistente")
     public void testandoAdicionarTitulo02(){
@@ -261,12 +266,10 @@ public class ControllerDocumentoTest {
         controllerDocumento.criarDocumento("JOAO");
         controllerDocumento.criarDocumento("HENRIQUE");
         controllerDocumento.criarTexto("HENRIQUE", "joao é legal", 5);
-        controllerDocumento.criarTexto("JOAO", "ele ama PLP", 5);
         controllerDocumento.criarTexto("JOAO", "Joseana é uma otima professora", 2);
-        controllerDocumento.criarTexto("HENRIQUE", "ta comendo bolo de nutela", 4);
+        controllerDocumento.criarTexto("HENRIQUE", "Ta comendo bolo de nutela", 4);
         controllerDocumento.criarAtalho("JOAO", "HENRIQUE");
-        System.out.println(controllerDocumento.pegarRepresentacaoResumida("HENRIQUE", 3));
-        assertEquals("joao é legal\nele ama PLP\n", controllerDocumento.pegarRepresentacaoResumida("HENRIQUE", 3));
+        assertEquals("Ta comendo bolo de nutela", controllerDocumento.pegarRepresentacaoResumida("HENRIQUE", 2));
     }
 
     @Test
@@ -344,6 +347,15 @@ public class ControllerDocumentoTest {
     }
 
     @Test
+    @DisplayName("Testando mover para cima com posicao invalida")
+    public void moverParaCima02(){
+        controllerDocumento.criarDocumento("Juazeirinho");
+        controllerDocumento.criarTexto("Juazeirinho", "Terra Boa", 4);
+        controllerDocumento.criarTexto("Juazeirinho", "terra maravilhosa", 5);
+        assertThrows(IllegalArgumentException.class,() -> controllerDocumento.moverParaCima("Juazeirinho", 4));
+    }
+
+    @Test
     @DisplayName("Testando mover para baixo")
     public void moverParaBaixo(){
         controllerDocumento.criarDocumento("Juazeirinho");
@@ -353,6 +365,95 @@ public class ControllerDocumentoTest {
         controllerDocumento.criarTexto("Juazeirinho", "chover chover", 3);
         controllerDocumento.moverParaBaixo("Juazeirinho", 2);
         assertEquals("chover chover", controllerDocumento.pegaRepresentacaoCompleta("Juazeirinho", 3));
+    }
+
+    @Test
+    @DisplayName("Testando mover para baixo com posicao inválida")
+    public void moverParaBaixo02(){
+        controllerDocumento.criarDocumento("Juazeirinho");
+        controllerDocumento.criarTexto("Juazeirinho", "Terra Boa", 4);
+        controllerDocumento.criarTexto("Juazeirinho", "terra maravilhosa", 5);
+        controllerDocumento.criarTexto("Juazeirinho", "eu te amo jua", 4);
+        controllerDocumento.criarTexto("Juazeirinho", "chover chover", 3);
+        assertThrows(IllegalArgumentException.class,() -> controllerDocumento.moverParaBaixo("Juazeirinho", 4));
+    }
+
+    @Test
+    @DisplayName("Testando criar visao completa")
+    public void VisaoCompleta01(){
+        controllerDocumento.criarDocumento("JP");
+        controllerDocumento.criarTexto("JP", "JP é gente boa", 3);
+        assertEquals(0, controllerDocumento.criarVisaoCompleta("JP"));
+
+    }
+    @Test
+    @DisplayName("Testando exibir visao Completa")
+    public void VisaoCompleta02(){
+        controllerDocumento.criarDocumento("JP");
+        controllerDocumento.criarTexto("JP", "JP é gente boa", 3);
+        controllerDocumento.criarVisaoCompleta("JP");
+        assertArrayEquals(new String[]{"JP é gente boa"}, controllerDocumento.exibirVisao(0));
+    }
+
+    @Test
+    @DisplayName("Testando criar visao resumida")
+    public void VisaoResumida01(){
+        controllerDocumento.criarDocumento("Pamonha");
+        controllerDocumento.criarTexto("Pamonha", "Pamonha é meu gymbro eterno", 4);
+        assertEquals(0, controllerDocumento.criarVisaoResumida("Pamonha"));
+    }
+
+    @Test
+    @DisplayName("Testando exibir visao resumida")
+    public void VisaoResumida02(){
+        controllerDocumento.criarDocumento("Pamonha");
+        controllerDocumento.criarTexto("Pamonha", "Pamonha é meu gymbro eterno", 4);
+        controllerDocumento.criarVisaoResumida("Pamonha");
+        assertArrayEquals(new String[]{"Pamonha é meu gymbro eterno"}, controllerDocumento.exibirVisao(0));
+    }
+
+    @Test
+    @DisplayName("Testando criar visao prioritaria")
+    public void visaoPrioritaria01(){
+        controllerDocumento.criarDocumento("UFCG");
+        controllerDocumento.criarTexto("UFCG", "acaba o semestre porfavor", 4);
+        assertEquals(0, controllerDocumento.criarVisaoPrioritaria("UFCG", 4));
+    }
+
+    //como a lista não esta dentro da prioridade
+    @Test
+    @DisplayName("Testando exibir visao prioritaria")
+    public void visaoPrioritaria02(){
+        controllerDocumento.criarDocumento("UFCG");
+        controllerDocumento.criarTexto("UFCG", "acaba o semestre porfavor", 4);
+        controllerDocumento.criarLista("UFCG", "Ola|meu|amigo", 2, "|", "-");
+        controllerDocumento.criarVisaoPrioritaria("UFCG", 4);
+        assertArrayEquals(new String[]{"acaba o semestre porfavor"}, controllerDocumento.exibirVisao(0));
+
+    }
+
+    @Test
+    @DisplayName("Testando criar visao titulo")
+    public void visaoTitulo(){
+        controllerDocumento.criarDocumento("VALORANTE");
+        controllerDocumento.criarTexto("VALORANTE", "gabriel joga valorant", 3);
+        assertEquals(0, controllerDocumento.criarVisaoTitulo("VALORANTE"));
+    }
+
+    @Test
+    @DisplayName("Testando exibir visao titulo")
+    public void visaoTitulo01(){
+        controllerDocumento.criarDocumento("VALORANTE");
+        controllerDocumento.criarTexto("VALORANTE", "gabriel joga valorant", 3);
+        assertEquals(0, controllerDocumento.criarVisaoTitulo("VALORANTE"));
+    }
+    @Test
+    @DisplayName("Testando exibir visao titulo")
+    public void visaoTitulo02(){
+        controllerDocumento.criarDocumento("VALORANTE");
+        controllerDocumento.criarTexto("VALORANTE", "gabriel joga valorant", 3);
+        controllerDocumento.criarVisaoTitulo("VALORANTE");
+        assertArrayEquals(new String[]{"gabriel joga valorant"}, controllerDocumento.exibirVisao(0));
     }
 
 

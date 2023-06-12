@@ -20,6 +20,7 @@ public class ControllerDocumento {
 	 */
 	public ControllerDocumento() {
 		this.documentos = new HashMap<>();
+		this.visaoController = new ControllerVisao();
 	}
 	/**
 	 * Retorna a quantidade de documentos cadastrados.

@@ -14,9 +14,9 @@ public class ControllerVisao implements VisaoI {
 
     /**
      * Construtor da classe ControllerVisao.
-     * @param visoes uma lista de visões existentes
+     *
      */
-    public ControllerVisao(ArrayList visoes) {
+    public ControllerVisao() {
         this.visoes = new ArrayList<>();
     }
     /**
@@ -60,7 +60,7 @@ public class ControllerVisao implements VisaoI {
         for (Elemento elemento : documento.getElementos()){
             visaoCompleta.add(elemento.gerarRepresentacaoCompleta());
         }
-        return (String[]) visaoCompleta.toArray();
+        return visaoCompleta.toArray(new String[visoes.size()]);
     }
 
     /**
@@ -75,7 +75,7 @@ public class ControllerVisao implements VisaoI {
         for(Elemento elemento: documento.getElementos()){
             visaoResumida.add(elemento.gerarRepresentacaoCompleta());
         }
-        return (String[])  visaoResumida.toArray();
+        return visaoResumida.toArray(new String[visoes.size()]);
     }
     /**
      * Cria uma visão prioritária de um documento com base em uma determinada prioridade.
@@ -93,7 +93,7 @@ public class ControllerVisao implements VisaoI {
                 visaoPrioritaria.add(elemento.gerarRepresentacaoCompleta());
             }
         }
-        return (String[]) visaoPrioritaria.toArray();
+        return visaoPrioritaria.toArray(new String[visoes.size()]);
     }
     /**
      * Cria uma visão de título de um documento.
@@ -106,7 +106,7 @@ public class ControllerVisao implements VisaoI {
         for (Elemento elemento : documento.getElementos()){
             visaoTitulo.add(elemento.gerarRepresentacaoResumida());
         }
-        return (String[]) visaoTitulo.toArray();
+        return visaoTitulo.toArray(new String[visoes.size()]);
     }
 
     private boolean existePosicao(int visaoId) {
